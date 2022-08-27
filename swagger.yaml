@@ -241,6 +241,9 @@ paths:
                     language:
                       type: string
                       example: "Hindi"
+                    genre:
+                      type: string
+                      example: Historical Romance
                     actors:
                       type: array
                       items: {}
@@ -272,6 +275,9 @@ paths:
                 language:
                   type: string
                   example: "Hindi"
+                genre:
+                  type: string
+                  example: Historical Romance
                 actors:
                   type: array
                   items: {}
@@ -293,6 +299,9 @@ paths:
                   language:
                     type: string
                     example: "Hindi"
+                  genre:
+                    type: string
+                    example: Historical Romance
                   actors:
                     type: array
                     items: {}
@@ -346,6 +355,9 @@ paths:
                 language:
                   type: string
                   example: "Hindi"
+                genre:
+                  type: string
+                  example: Historical Romance
                 actors:
                   type: array
                   items: {}
