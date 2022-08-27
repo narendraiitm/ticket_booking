@@ -1,212 +1,59 @@
 openapi: 3.0.0
 info:
-  title: Week Six Assignment Problem Statement
-  description: >
-    <div>In this assignment, you have to create a RESTful API, database models using Flask-RESTful  and flask-SQLAlchemy. We list below instructions to be followed in 
-    preparing and submitting the solution.
-    <h3>General instructions:</h3>
-    <ol> 
-      <li> Submit a single .zip file containing all your submission files and folders, the name of which should be "roll_number.zip". E.g.: 21f1000000.zip </li>
-      <li>The folder structure inside the zip file should be as follows:</li>
-      <ol type = "I">
-        <li>The Python program must be written inside a file named "app.py". This file must reside inside the root folder.</li>
-        <li> The database file named "api_database.sqlite3". You are not required to submit this database file with your submission.</li>
-      </ol>
-    <li> You should not keep any code inside the scope of the condition " if __name__ == '__main__' " except run() call. 
-    <li> Allowed Python packages: flask, flask-sqlalchemy, flask-restful, and any standard Python3 package.</li>
-    </ol>
-    </div>
-
-    <h3> Course Table Schema </h3> 
-    <table>
-      <thead>
-        <th>Column Name</th>
-        <th>Column Type</th>
-        <th>Constraints</th>
-      </thead>
-      <tbody>
-      <tr>
-        <td>course_id</td>
-        <td>Integer</td>
-        <td>Primary Key, Auto Increment</td>
-      </tr>
-      <tr>
-        <td>course_name</td>
-        <td>String</td>
-        <td>Not Null</td>
-      </tr>
-      <tr>
-        <td>course_code</td>
-        <td>String</td>
-        <td>Unique, Not Null</td>
-      </tr>      
-      <tr>
-        <td>course_description</td>
-        <td>String</td>
-        <td></td>
-      </tr>         
-    </tbody>
-    </table>
-    
-    <h3> Student Table Schema </h3> 
-    <table>
-      <thead>
-        <th>Column Name</th>
-        <th>Column Type</th>
-        <th>Constraints</th>
-      </thead>
-      <tbody>
-      <tr>
-        <td>student_id</td>
-        <td>Integer</td>
-        <td>Primary Key, Auto Increment</td>
-      </tr>
-      <tr>
-        <td>roll_number</td>
-        <td>String</td>
-        <td>Unique, Not Null</td>
-      </tr>
-      <tr>
-        <td>first_name</td>
-        <td>String</td>
-        <td>Not Null</td>
-      </tr>      
-      <tr>
-        <td>last_name</td>
-        <td>String</td>
-        <td></td>
-      </tr>         
-    </tbody>
-    </table>
-    
-    
-    <h3> Enrollment Table Schema </h3> 
-    <table>
-      <thead>
-        <th>Column Name</th>
-        <th>Column Type</th>
-        <th>Constraints</th>
-      </thead>
-      <tbody>
-      <tr>
-        <td>enrollment_id</td>
-        <td>Integer</td>
-        <td>Primary Key, Auto Increment</td>
-      </tr>
-      <tr>
-        <td>student_id</td>
-        <td>Integer</td>
-        <td>Foreign Key (student.student_id), Not Null</td>
-      </tr>
-      <tr>
-        <td>course_id</td>
-        <td>Integer</td>
-        <td>Foreign Key (course.course_id), Not Null</td>
-    </tbody>
-    </table>
-    
-    <h3> Error Codes </h3> 
-    <table>
-      <thead>
-        <th>Resource</th>
-        <th>Error Code</th>
-        <th>Message</th>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Course</td>
-        <td>COURSE001</td>
-        <td>Course Name is required and should be string.</td>
-      </tr>
-      <tr>
-        <td>Course</td>
-        <td>COURSE002</td>
-        <td>Course Code is required and should be string.</td>
-      </tr>
-      <tr>
-        <td>Course</td>
-        <td>COURSE003</td>
-        <td> Course Description should be string.</td>
-      </tr>
-      <tr>
-        <td>Student</td>
-        <td>STUDENT001</td>
-        <td>Roll Number required and should be String </td>
-      </tr>
-      <tr>
-        <td>Student</td>
-        <td>STUDENT002</td>
-        <td>First Name is required and should be String </td>
-      </tr>
-      <tr>
-        <td>Student</td>
-        <td>STUDENT003</td>
-        <td>Last Name is String </td>
-      </tr>
-      <tr>
-        <td>Enrollment</td>
-        <td>ENROLLMENT001</td>
-        <td>Course does not exist</td>
-      </tr>
-      <tr>
-        <td>Enrollment</td>
-        <td>ENROLLMENT002</td>
-        <td>Student does not exist.</td>
-      </tr>  
-      <tr>
-        <td>Enrollment</td>
-        <td>ENROLLMENT003</td>
-        <td>Course Code is required and should be string.</td>
-      </tr>  
-    </tbody>
-    </table>
+  title: Movie ticket booking
+  description: Api documentation for movie ticket application
     
   version: 1.0.0
 servers:
-  - url: https://mad2week6updated.narendramishra2.repl.co/
+  - url: http://127.0.0.1:5000/
 paths:
-  /api/course/{course_id}:
-    description: End point to read, update and delete a course resource with course_id = courseId.
+  /api/v1/theaters/{theater_id}:
+    description: End point url to read, update and delete theater data.
     get:
-      description: Operation to Read course resource.
+      description: Operation to Read theater resource.
       parameters:
         - in: path
-          name: course_id
+          name: theater_id
           required: true
           schema:
             type: integer
             example: 201
       responses:
         '200':
-          description: Request Successful
+          description: Success
           content:
             application/json:
               schema:
-                title: course object
+                title: Theater object
                 type: object
                 properties:
-                  course_id:
-                    type: integer
-                    example: 201
-                  course_name:
-                    type: string
-                    example: Maths1
-                  course_code:
-                    type: string
-                    example: MA101
-                  course_description:
-                    type: string
-                    example: Course Description Example
+                    theater_name:
+                      type: string
+                      example: "Shish Mahal"
+                    place:
+                      type: string
+                      example: "Varansi"
+                    seats_count:
+                      type: integer
+                      example: 20
+                    movies:
+                      type: array
+                      items: {}
+                      example: [{movie_id: 1001, movie_name: 'Bajirao Mastani', actors:['Ranveer Sing', 'Deepika Padukone']}]
+                    slots:
+                      type: array
+                      items: {}
+                      example: [{start_time: '7AM', end_time: '10PM'}]
         '500':
-          description: Internal Server Error
+          description: Internal Server Error.
         '404':
-          description: Course not found
+          description: Theater not found.
 
     put:
-      description: Operation to update the course resource.
+      description: Operation to update the theater detail
       parameters:
         - in: path
-          name: course_id
+          name: theater_id
           required: true
           schema:
             type: integer
@@ -217,367 +64,58 @@ paths:
             schema:
               type: object
               properties:
-                course_name:
+                theater_name:
                   type: string
-                  example: Maths1
-                course_code:
+                  example: "Shish Mahal"
+                place:
                   type: string
-                  example: MA101
-                course_description:
-                  type: string
-                  example: Course Description Example
-      responses:
-        '200':
-          description: Successfuly updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  course_id:
-                    type: integer
-                    example: 201
-                  course_name:
-                    type: string
-                    example: Maths1
-                  course_code:
-                    type: string
-                    example: MA101
-                  course_description:
-                    type: string
-                    example: Course Description Example
-        '404':
-          description: Course not found
-        '500':
-          description: Internal Server Error
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error_code:
-                    type: string
-                  error_message:
-                    type: string
-    delete:
-      description: Operation to delete the course resource
-      parameters:
-        - in: path
-          name: course_id
-          required: true
-          schema:
-            type: integer
-            example: 201
-      responses:
-        '200':
-          description: Successfully Deleted
-        '404':
-          description: Course not found
-        '500':
-          description: Intenal Server Error
-
-  /api/course:
-    description: End point to create course resource
-    post:
-      description: Operation to create the course resource
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                course_name:
-                  type: string
-                  example: Maths1
-                course_code:
-                  type: string
-                  example: MA101
-                course_description:
-                  type: string
-                  example: Course Description Example
-      responses:
-        '201':
-          description: Successfully Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  course_id:
-                    type: integer
-                    example: 201
-                  course_name:
-                    type: string
-                    example: Maths1
-                  course_code:
-                    type: string
-                    example: MA101
-                  course_description:
-                    type: string
-                    example: Course Description Example
-        '409':
-          description: course_code already exist
-        '500':
-          description: Internal Server Error
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error_code:
-                    type: string
-                  error_message:
-                    type: string
-  /api/student/{student_id}:
-    description: Url to read, update and delete the student resource.
-    get:
-      description: Operation to read student resource
-      parameters:
-        - in: path
-          name: student_id
-          required: true
-          schema:
-            type: integer
-            example: 201
-      responses:
-        '200':
-          description: Request Successful
-          content:
-            application/json:
-              schema:
-                title: student object
-                type: object
-                properties:
-                  student_id:
-                    type: integer
-                    example: 101
-                  first_name:
-                    type: string
-                    example: Narendra
-                  last_name:
-                    type: string
-                    example: Mishra
-                  roll_number:
-                    type: string
-                    example: MA19M010
-        '500':
-          description: Internal server error
-        '404':
-          description: Student not found
-
-
-    put:
-      description: Operation to update the student resource
-      parameters:
-        - in: path
-          name: student_id
-          required: true
-          schema:
-            type: integer
-            example: 101
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                first_name:
-                  type: string
-                  example: Narendra
-                last_name:
-                  type: string
-                  example: Mishra
-                roll_number:
-                  type: string
-                  example: MA19M010
-      responses:
-        '200':
-          description: Successfully updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  student_id:
-                    type: integer
-                    example: 101
-                  first_name:
-                    type: string
-                    example: Narendra
-                  last_name:
-                    type: string
-                    example: Mishra
-                  roll_number:
-                    type: string
-                    example: MA19M010
-        '404':
-          description: Student not found
-        '500':
-          description: Internal Server Error
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error_code:
-                    type: string
-                  error_message:
-                    type: string
-    delete:
-      description: Operation to delete the course resource
-      parameters:
-        - in: path
-          name: student_id
-          required: true
-          schema:
-            type: integer
-            example: 101
-      responses:
-        '200':
-          description: Successfully Deleted
-        '500':
-          description: Internal Server Error
-        '404':
-          description: Student not found
-
-  /api/student:
-    description: Url to create student resource
-    post:
-      description: Operation to create the student resource
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                first_name:
-                  type: string
-                  example: Narendra
-                last_name:
-                  type: string
-                  example: Mishra
-                roll_number:
-                  type: string
-                  example: MA19M010
-      responses:
-        '201':
-          description: Successfully Created
-          content:
-            application/json:
-              schema:
-                title: student object
-                type: object
-                properties:
-                  student_id:
-                    type: integer
-                    example: 101
-                  first_name:
-                    type: string
-                    example: Narendra
-                  last_name:
-                    type: string
-                    example: Mishra
-                  roll_number:
-                    type: string
-                    example: MA19M010
-        '409':
-          description: Student already exist
-        '500':
-          description: Internal Server Error
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error_code:
-                    type: string
-                  error_message:
-                    type: string
-
-  /api/student/{student_id}/course:
-    description: Url to get the the list of enrollments a student with student_id is enrolled in.
-    get:
-      description: URL to get the list of enrollments, the student is enrolled in. This path belongs to the Enrollment table.
-      parameters:
-        - in: path
-          name: student_id
-          required: true
-          schema:
-            type: integer
-            example: 101
-      responses:
-        '200':
-          description: Request Successful
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  properties:
-                    enrollment_id:
-                      type: integer
-                      example: 10
-                    student_id:
-                      type: integer
-                      example: 101
-                    course_id:
-                      type: integer
-                      example: 201
-        '404':
-          description: Student is not enrolled in any course
-        '500':
-          description: Internal Server Error
-
-    post:
-      description: Add student enrollment aka enroll the student to the course. This path belongs to the Enrollment table.
-      parameters:
-        - in: path
-          name: student_id
-          required: true
-          schema:
-            type: integer
-            example: 101
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                course_id:
+                  example: "Varansi"
+                seats_count:
                   type: integer
-                  example: 12345
+                  example: 20
+                movies:
+                  type: array
+                  items: {}
+                  example: [1001, 1002]
+                slots:
+                  type: array
+                  items: {}
+                  example: [101, 102]
       responses:
-        '201':
-          description: Enrollment successful
+        '200':
+          description: Successfuly updated.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  properties:
-                    enrollment_id:
-                      type: integer
-                      example: 10
-                    student_id:
-                      type: integer
-                      example: 101
-                    course_id:
-                      type: integer
-                      example: 201
+                type: object
+                properties:
+                  theater_id:
+                    type: integer
+                    example: 1001
+                  theater_name:
+                    type: string
+                    example: "Shish Mahal"
+                  place:
+                    type: string
+                    example: "Varansi"
+                  seats_count:
+                    type: integer
+                    example: 20
+                  movies:
+                    type: array
+                    items: {}
+                    example: [{movie_id: 1001, movie_name: 'Bajirao Mastani', actors:['Ranveer Sing', 'Deepika Padukone']}]
+                    
+                  slots:
+                    type: array
+                    items: {}
+                    example: [{start_time: '7AM', end_time: '10PM'}]
         '404':
-          description: Student not found
+          description: Theater you requested to update not found
         '500':
           description: Internal Server Error
         '400':
-          description: Bad request
+          description: Bad request.
           content:
             application/json:
               schema:
@@ -587,29 +125,482 @@ paths:
                     type: string
                   error_message:
                     type: string
-
-  /api/student/{student_id}/course/{course_id}:
-    description: URL to delete enrollment of a student in a course. This path belongs to the Enrollment table.
     delete:
-      description: URL to delete enrollment of the student in the course. This path belongs to the Enrollment table.
+      description: Operation to delete the theater resource.
       parameters:
         - in: path
-          name: student_id
+          name: theater_id
           required: true
           schema:
             type: integer
-            example: 101
-        - in: path
-          name: enrollment_id
-          required: true
-          schema:
-            type: integer
-            example: 10
+            example: 201
       responses:
         '200':
-          description: Successfully deleted
+          description: Successfully Deleted.
         '404':
-          description: Enrollment for the student not found
+          description: Theater does not exist.
+        '500':
+          description: Intenal Server Error.
+          
+          
+  /api/v1/theaters:
+    description: End point url to create a theater.
+    post:
+      description: Operation create a theater.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                theater_name:
+                  type: string
+                  example: "Shish Mahal"
+                place:
+                  type: string
+                  example: "Varansi"
+                seats_count:
+                  type: integer
+                  example: 20
+                movies:
+                  type: array
+                  items: {}
+                  example: [1001, 1002]
+                  
+                slots:
+                  type: array
+                  items: {}
+                  example: [101, 102]
+                  
+      responses:
+        '201':
+          description: Successfully Created theater.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  theater_name:
+                    type: string
+                    example: "Shish Mahal"
+                  place:
+                    type: string
+                    example: "Varansi"
+                  seats_count:
+                    type: integer
+                    example: 20
+                  movies:
+                    type: array
+                    items: {}
+                    example: [{movie_id: 1001, movie_name: 'Bajirao Mastani', actors:['Ranveer Sing', 'Deepika Padukone']}]
+                  slots:
+                    type: array
+                    items: {}
+                    example: [{start_time: '7AM', end_time: '10PM'}]
+        '409':
+          description: Ticket already booked.
+        '500':
+          description: Internal Server Error.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+  
+  
+  
+  /api/v1/movies/{movie_id}:
+    description: End point url to read, update and delete movie data.
+    get:
+      description: Operation to Read movie resource.
+      parameters:
+        - in: path
+          name: movie_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Movie Object
+                type: object
+                properties:
+                    movie_name:
+                      type: string
+                      example: "Bajirao Mastani"
+                    language:
+                      type: string
+                      example: "Hindi"
+                    actors:
+                      type: array
+                      items: {}
+                      example: ['Ranveer Singh', 'Deepika Padukone']
+                      
+        '500':
+          description: Internal Server Error.
+        '404':
+          description: Movie not found.
+
+    put:
+      description: Operation to update the movie detail
+      parameters:
+        - in: path
+          name: movie_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_name:
+                  type: string
+                  example: "Bajirao Mastani"
+                language:
+                  type: string
+                  example: "Hindi"
+                actors:
+                  type: array
+                  items: {}
+                  example: ['Ranveer Singh', 'Deepika Padukone']
+      responses:
+        '200':
+          description: Successfuly updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  movie_id:
+                    type: integer
+                    example: 1001
+                  movie_name:
+                    type: string
+                    example: "Bajirao Mastani"
+                  language:
+                    type: string
+                    example: "Hindi"
+                  actors:
+                    type: array
+                    items: {}
+                    example: ['Ranveer Singh', 'Deepika Padukone']
+        '404':
+          description: Movie you requested to update not found
         '500':
           description: Internal Server Error
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+    delete:
+      description: Operation to delete the Movie resource.
+      parameters:
+        - in: path
+          name: movie_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Successfully Deleted.
+        '404':
+          description: Movie does not exist.
+        '500':
+          description: Intenal Server Error.
+          
+          
+  /api/v1/movies:
+    description: End point url to create a movie.
+    post:
+      description: Operation create a movie.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_name:
+                  type: string
+                  example: "Bajirao Mastani"
+                language:
+                  type: string
+                  example: "Hindi"
+                actors:
+                  type: array
+                  items: {}
+                  example: ['Ranveer Singh', 'Deepika Padukone']
+                  
+      responses:
+        '201':
+          description: Movie Successfully Created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  movie_id:
+                    type: integer
+                    example: 1001
+                  movie_name:
+                    type: string
+                    example: "Bajirao Mastani"
+                  language:
+                    type: string
+                    example: "Hindi"
+                  actors:
+                    type: array
+                    items: {}
+                    example: ['Ranveer Singh', 'Deepika Padukone']
+        '409':
+          description: Movie already exist.
+        '500':
+          description: Internal Server Error.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string 
+                    
+                    
+  /api/v1/slots/{slot_id}:
+    description: End point url to read, update and delete slot data.
+    get:
+      description: Operation to Read slot resource.
+      parameters:
+        - in: path
+          name: slot_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Slot Object
+                type: object
+                properties:
+                    slot_id:
+                      type: integer
+                      example: 1001
+                    start_time:
+                      type: object
+                      example: 7:00 PM
+                    end_time:
+                      type: object
+                      example: 10:00 PM
+                    
+                      
+        '500':
+          description: Internal Server Error.
+        '404':
+          description: Slot not found.
 
+    put:
+      description: Operation to update the slot detail
+      parameters:
+        - in: path
+          name: slot_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_time:
+                  type: object
+                  example: 7:00 PM
+                end_time:
+                  type: object
+                  example: 10:00 PM
+      responses:
+        '200':
+          description: Successfuly updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slot_id:
+                      type: integer
+                      example: 1001
+                  start_time:
+                    type: object
+                    example: 7:00 PM
+                  end_time:
+                    type: object
+                    example: 10:00 PM
+        '404':
+          description: Slot you requested to update not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+    delete:
+      description: Operation to delete the slot resource.
+      parameters:
+        - in: path
+          name: slot_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Successfully Deleted.
+        '404':
+          description: Slot does not exist.
+        '500':
+          description: Intenal Server Error.
+          
+          
+  /api/v1/slots:
+    description: End point url to create a theater.
+    post:
+      description: Operation create a theater.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_time:
+                  type: object
+                  example: 7:00 PM
+                end_time:
+                  type: object
+                  example: 10:00 PM
+                  
+      responses:
+        '201':
+          description: Successfully Booked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slot_id:
+                    type: integer
+                    example: 1001
+                  start_time:
+                    type: object
+                    example: 7:00 PM
+                  end_time:
+                    type: object
+                    example: 10:00 PM
+        '409':
+          description: Slot already exist.
+        '500':
+          description: Internal Server Error.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string 
+                    
+
+  /api/v1/booking:
+    description: End point url to book a movie ticket.
+    post:
+      description: Operation to book a movie ticket.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                theater_id:
+                  type: integer
+                  example: 1001
+                movie_id:
+                  type: integer
+                  example: 2001
+                seat_number:
+                  type: integer
+                  example: 201
+                slot_id:
+                  type: integer
+                  example: 10
+      responses:
+        '201':
+          description: Successfully Booked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  theater_name:
+                    type: string
+                    example: "Sheesh Mahal"
+                  movie_name:
+                    type: string
+                    example: "Bajirao Mastani"
+                  seat_number:
+                    type: integer
+                    example: 201
+                  slot_id:
+                    type: string
+                    example: '7:00 PM-10:00 PM'
+        '409':
+          description: Ticket already booked.
+        '500':
+          description: Internal Server Error.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
